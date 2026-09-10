@@ -5,15 +5,17 @@ on:
     workflows: ["CI Pipeline"]
     types:
       - completed
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   deploy_to_aws:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+
     environment:
       name: production
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -38,8 +40,8 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-        - name: Deploy to ECS Service
-          run: |
+      - name: Deploy to ECS Service
+        run: |
           aws ecs update-service \
             --cluster default \
             --service streamlit-mlops-app-a5f9 \
