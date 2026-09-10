@@ -29,6 +29,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
+      - name: Check AWS Identity and ECR Repository
+        run: |
+          echo "Checking AWS account..."
+          aws sts get-caller-identity
+
+          echo "Checking ECR repository..."
+          aws ecr describe-repositories \
+            --repository-names streamlit-mlops-app \
+            --region eu-north-1
+
       - name: Log in to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
@@ -48,4 +58,5 @@ jobs:
           aws ecs update-service \
             --cluster default \
             --service streamlit-mlops-app-a5f9 \
-            --force-new-deployment
+            --force-new-deployment \
+            --region eu-north-1
