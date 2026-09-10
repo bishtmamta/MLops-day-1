@@ -3,6 +3,17 @@ import streamlit as st
 import pandas as pd
 import mlflow
 import mlflow.sklearn
+import joblib
+import os
+
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "models", "champion_model.pkl")
+
+@st.cache_resource
+def load_model():
+    return joblib.load(MODEL_PATH)
 
 # MLflow tracking URI
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
@@ -13,7 +24,7 @@ model = mlflow.sklearn.load_model(
 )
 
 # Streamlit app
-st.title("Advertising Sales Predictor")
+st.title("Advertising Sales Predictor")                                    
 
 # Input fields
 tv = st.number_input("TV Budget")

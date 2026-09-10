@@ -4,6 +4,7 @@ pandas
 scikit-learn
 mlflow
 streamlit
+pytest
 
 
 

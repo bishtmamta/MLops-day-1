@@ -1,4 +1,4 @@
-artifact_path: file:C:/Users/princ/MLops day 1/mlruns/1/models/m-b2bf144df2cf46bca41ed8ba97be8ca0/artifacts
+artifact_path: file:C:/Users/princ/MLops day 1/mlruns/1/models/m-80a8dfa576214423a38bbf127da3157a/artifacts
 flavors:
   python_function:
     env:
@@ -15,9 +15,9 @@ flavors:
     sklearn_version: 1.6.1
     skops_trusted_types: null
 mlflow_version: 3.16.0
-model_id: m-b2bf144df2cf46bca41ed8ba97be8ca0
-model_size_bytes: 1963058
-model_uuid: m-b2bf144df2cf46bca41ed8ba97be8ca0
+model_id: m-80a8dfa576214423a38bbf127da3157a
+model_size_bytes: 6688
+model_uuid: m-80a8dfa576214423a38bbf127da3157a
 prompts: null
-run_id: ead7f79633ed4b3b8626416aeccc14ef
-utc_time_created: '2026-09-06 10:22:54.428932'
+run_id: 71152384ba884d8fa7efd983eb97b542
+utc_time_created: '2026-09-07 18:30:16.392082'
