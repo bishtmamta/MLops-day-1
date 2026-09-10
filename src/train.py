@@ -196,23 +196,12 @@ champion_model_uri = (
     f"models:/{registered_model_name}@champion"
 )
 
-champion_model = mlflow.sklearn.load_model(
-    champion_model_uri
-)
-
-
-# Save standalone champion artifact
-champion_export_path = os.path.join(
-    MODELS_DIR,
-    "champion_model.pkl"
-)
-
-joblib.dump(
-    champion_model,
-    champion_export_path
-)
-
-print(
-    f"Exported registry champion model to "
-    f"{champion_export_path}"
-)
+try:
+    champion_model = mlflow.sklearn.load_model(
+        champion_model_uri
+    )
+except Exception:
+    print("Champion artifact unavailable. Using current challenger model.")
+    champion_model = mlflow.sklearn.load_model(
+        f"runs:/{best_run_id}/model"
+    )
