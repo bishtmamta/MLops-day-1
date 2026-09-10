@@ -1,3 +1,4 @@
+
 import pandas as pd
 import mlflow
 import os
@@ -9,13 +10,15 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import root_mean_squared_error
 from sklearn.ensemble import RandomForestRegressor
 
-#Set dynamic project root path
 
-BASE_DIR= os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_PATH= os.path.join(BASE_DIR, "data", "data.csv")
-DB_PATH= os.path.join(BASE_DIR, "mlflow.db")
-MODELS_DIR= os.path.join(BASE_DIR, "models")
-os.makedirs (MODELS_DIR, exist_ok=True)
+# Set dynamic project root path
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DATA_PATH = os.path.join(BASE_DIR, "data", "Advertising.csv")
+DB_PATH = os.path.join(BASE_DIR, "mlflow.db")
+MODELS_DIR = os.path.join(BASE_DIR, "models")
+
+os.makedirs(MODELS_DIR, exist_ok=True)
 
 
 # 1. Setup tracking
@@ -28,9 +31,7 @@ mlflow.set_experiment(experiment_name)
 
 
 # 2. Data Preparation
-df = pd.read_csv(
-    r"C:\Users\princ\MLops day 1\data\Advertising.csv"
-)
+df = pd.read_csv(DATA_PATH)
 
 x = df[["TV", "radio", "newspaper"]]
 y = df["sales"]
@@ -177,7 +178,6 @@ try:
 except Exception:
 
     # First time running — no champion exists
-
     client.set_registered_model_alias(
         registered_model_name,
         "champion",
@@ -190,12 +190,29 @@ except Exception:
         f"as first champion!"
     )
 
-#Load current champion from MLflow Registry
-champion_model_uri= f"models:/{registered_model_name}@champion"
-champion_model=mlflow.sklearn.load_model(champion_model_uri)
 
-# Save standalon champion artifact
-champion_export_path= os.path.join(MODELS_DIR,"champion_model.pkl")
-joblib.dump(champion_model,champion_export_path)
+# Load current champion from MLflow Registry
+champion_model_uri = (
+    f"models:/{registered_model_name}@champion"
+)
 
-print(f"Exported registry champion model to {champion_export_path}")
+champion_model = mlflow.sklearn.load_model(
+    champion_model_uri
+)
+
+
+# Save standalone champion artifact
+champion_export_path = os.path.join(
+    MODELS_DIR,
+    "champion_model.pkl"
+)
+
+joblib.dump(
+    champion_model,
+    champion_export_path
+)
+
+print(
+    f"Exported registry champion model to "
+    f"{champion_export_path}"
+)
