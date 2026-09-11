@@ -56,7 +56,7 @@ jobs:
       - name: Deploy to ECS Service
         run: |
           aws ecs update-service \
-            --cluster default \
+            --cluster mlops-cluster \
             --service streamlit-mlops-app-a5f9 \
             --force-new-deployment \
             --region eu-north-1
